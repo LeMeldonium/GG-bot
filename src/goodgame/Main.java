@@ -174,7 +174,7 @@ public class Main {
             TestApp.websocketClientEndpointClass.sendMessage(Commands.getUserList(channel.getId()));
             System.out.println("запросил лист");
             newMessage = message.substring(message.lastIndexOf("user_name\":\"")+12);
-            System.out.println("name");
+//            System.out.println("name");
             name = newMessage.substring(0, newMessage.indexOf('\"'));
             if (undeadList.contains(name)){
                 System.out.println("уже пинговал");

@@ -72,6 +72,14 @@ import java.net.URI;
         }
 
         /**
+         * remove message handler
+         *
+         */
+        public void removeMessageHandler() {
+            this.messageHandler = null;
+        }
+
+        /**
          * Send a message.
          *
          * @param message

@@ -6,8 +6,8 @@ import goodgame.connect.TestApp;
 import java.util.List;
 import java.util.Random;
 
+import static goodgame.Main.candy;
 import static goodgame.Main.channel;
-import static goodgame.Main.licker;
 
 public class MessageText {
     public static String lickBody(String name, String name1) {
@@ -37,19 +37,20 @@ public class MessageText {
     }
 
     public static String lickHelp() {
-        return "Команды: !лизь - лизнуть стримера, <ник> -лизь - лизнуть кого-то, хочу лизь - лизнуть себя, !хохо - лизнуть прохожего, !вселизь - [данные удалены] \",";
+        return "Команды: !лизь - лизнуть стримера, <ник> -лизь - лизнуть кого-то, хочу лизь - лизнуть себя, !хохо - лизнуть прохожего \","; //, вселизь - [данные удалены]
     }
 
-    public static String candy() {
-        if (licker.equals("")){
+    public static String candy(String name) {
+        if (candy.equals("")){
             return "До назначения карамельки осталось всего " + Time.getTime(TestApp.event) + " \",";
 //            return "Карамельку ещё не выбрали :sad: \",";
         }
-        return licker + " сегодня карамелька \",";
+
+        return candy + ", " + Lizaki.smile(7, channel.getName()) + name + "с довольным лицом лижет карамельку \",";
     }
 
-    public static String lickOfTheStream(String name) {
-        return "Карамелькой дня выбирается " + name + ", -лизь к бою! \",";
+    public static String candyOfTheStream(String name) {
+        return name + ", выбирается карамелькой дня " + ", -лизь к бою! \",";
     }
 
     public static String JACKPOT(String name) {
@@ -75,6 +76,11 @@ public class MessageText {
         for (String name: usersList){
             txt += name + ", ";
         }
+        if ((TestApp.event/5)%2==0) {
+            System.out.println("==0");
+            return txt + " а ну быстро лизнули стримера! :verloingold:\",";
+        }
+        System.out.println("!=0");
         return txt + " сделал лизь - сердцу радость :brat_loken5:\",";
     }
 

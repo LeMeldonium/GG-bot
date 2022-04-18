@@ -4,6 +4,7 @@ package goodgame;
 import goodgame.cahnnel.Channel;
 import goodgame.cahnnel.MessageText;
 import goodgame.connect.TestApp;
+import goodgame.multithread.Processor;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,21 +18,23 @@ import java.util.List;
 public class Main {
     public static Channel channel;
     public static String message;
-    public static String licker = "";
+    public static String candy = "";
     public static List<String> list = new LinkedList<>();
     public static List<String> undeadList = new LinkedList<>();
+
     public static void main(String[] args) throws InterruptedException {
 
-//        channel = new Channel("15365", "Verloin", 60*60*1000L, "undead");
+//        channel = new Channel("15365", "Verloin", 45*60*1000L, "undead");
 //        channel = new Channel("183946", "LollyDragon", 45*60*1000L, "king");
         channel = new Channel("23802", "LeMeldonium", 60*60*1000L, "king");
         int i = 0;
+        Processor processor = new Processor();
         while (i < 1) { /** логика не закончена. Тут должно происходить переподключение к каналу
                         * но я не убедился в надобности этого. Сейчас при реконнекте не теряется
                         * соединение с чатом
                         */
+            processor.start();
             System.out.println(GetToken.getToken());
-            TestApp.testApp(GetToken.getToken(), channel);
             Thread.sleep(300000);
              i++;
         }
@@ -42,7 +45,9 @@ public class Main {
         String name;
         String name1;
         String text = null;
-        if (message.contains("-лизь")){
+        if (message.contains("Команды:")){
+            text = "";
+        } else if (message.contains("-лизь")){
             System.out.println(message.lastIndexOf("user_name\":\""));
             newMessage = message.substring(message.lastIndexOf("user_name\":\"")+12);
             name1 = newMessage.substring(0, newMessage.indexOf('\"'));
@@ -57,8 +62,6 @@ public class Main {
                     "        \"mobile\": false" +
                     "    }\n" +
                     "}";
-        } else if (message.contains("Команды:")){
-            text = "";
         } else if (message.contains("!лизь")){
             newMessage = message.substring(message.lastIndexOf("user_name\":\"")+12);
             name = newMessage.substring(0, newMessage.indexOf('\"'));
@@ -119,11 +122,13 @@ public class Main {
                     "    }\n" +
                     "}";
         } else if (message.contains("!карамель")){
+            newMessage = message.substring(message.lastIndexOf("user_name")+12);
+            name = newMessage.substring(0, newMessage.indexOf('\"'));
             text = "{\n" +
                     "    \"type\": \"send_message\",\n" +
                     "    \"data\": {\n" +
                     "        \"channel_id\": \"" + channel.getId() + "\",\n" +
-                    "        \"text\": \"" + MessageText.candy() +
+                    "        \"text\": \"" + MessageText.candy(name) +
                     "        \"hideIcon\": false," +
                     "        \"mobile\": false" +
                     "    }\n" +
@@ -170,7 +175,11 @@ public class Main {
                     "        \"mobile\": false" +
                     "    }\n" +
                     "}";
-        } else if (message.contains("!вселизь") && (message.contains(channel.getId() + "\":" + channel.getStatus()) || message.contains(channel.getId() + "\":6"))){
+            /**
+             *  отключил так как нет возможности адекватно посмотреть донатный статус
+             */
+
+        } else if (message.contains("!вселизь") && (message.contains("payments\":" + channel.getStatus()) || message.contains("payments\":7"))){
             TestApp.websocketClientEndpointClass.sendMessage(Commands.getUserList(channel.getId()));
             System.out.println("запросил лист");
             newMessage = message.substring(message.lastIndexOf("user_name\":\"")+12);
@@ -195,6 +204,7 @@ public class Main {
                     "        \"mobile\": false" +
                     "    }\n" +
                     "}";
+
         }
         return text;
     }

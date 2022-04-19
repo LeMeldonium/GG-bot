@@ -1,14 +1,13 @@
 package goodgame.multithread;
 
 import goodgame.ChStatus;
+import goodgame.Commands;
 import goodgame.EventWithList;
-import goodgame.GetToken;
-import goodgame.Main;
+import goodgame.Requests;
 import goodgame.cahnnel.Channel;
-import goodgame.connect.TestApp;
 
-import static goodgame.connect.TestApp.queueMessages;
-import static goodgame.connect.TestApp.websocketClientEndpointClass;
+import static goodgame.connect.ChatListener.queueMessages;
+import static goodgame.connect.ChatListener.websocketClientEndpointClass;
 
 public class Processor extends Thread{
     /**
@@ -18,51 +17,45 @@ public class Processor extends Thread{
      *
      */
 
-    public boolean doEvent;
-    public boolean canRandomize;//false - лизнуть часть чата, true - карамелька дня
-    public Channel channel;
-    TimerThread timerThread;
+    public boolean doEvent = false;
+    public boolean makeCandy = false;//false - лизнуть часть чата, true - карамелька дня
+    String afk = "{\"type\":\"channel_counters";
+    Channel channel;
+    int afkCounter = 0;
 
-    public Processor(){
-        channel = new Channel("15365", "Verloin", 45*60*1000L, "undead");
-//        channel = new Channel("183946", "LollyDragon", 45*60*1000L, "king");
-//        channel = new Channel("23802", "LeMeldonium", 10*60*1000L, "king");
-        timerThread = new TimerThread(channel.getPeriod(), channel.getId(), this);
-        TestApp.testApp(GetToken.getToken(), channel);
+    public Processor(Channel channel){
+        this.channel = channel;
     }
 
     @Override
     public void run() {
         String text;
-        String afk = "{\"type\":\"channel_counters";
         String message;
-        int afkCounter = 0;
-        doEvent = false;
-        canRandomize = false;
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        timerThread.start();
+        websocketClientEndpointClass.sendMessage(Requests.getUserList());//костыль
         while (true){ //проверка на заполененность очереди
                 if (!queueMessages.isEmpty()) {
                     message = queueMessages.get(0);
                     if (message.contains("{\"type\":\"message")) {
-                        text = Main.someoneAskedMe(message);
+                        text = Commands.someoneAskedMe(message);
                         if (text != null) {
                             websocketClientEndpointClass.sendMessage(text);
                         }
                         afkCounter = 0;
                     } else if (message.contains("{\"type\":\"users_list")) {
+                        EventWithList.wasRefreshedNow = false;
                         System.out.println("получил список юзверей");
                         if (doEvent) {
-                            websocketClientEndpointClass.sendMessage(EventWithList.withList(message, canRandomize, this));
+                            websocketClientEndpointClass.sendMessage(EventWithList.withList(message, makeCandy));
                             doEvent = false;
-                            canRandomize = false;
+                            makeCandy = false;
                         } else {
                             EventWithList.refreshList(message);
-                            websocketClientEndpointClass.sendMessage(EventWithList.withList(message, canRandomize, this));
+//                            websocketClientEndpointClass.sendMessage(EventWithList.withList(message, makeCandy));
                         }
                         afkCounter = 0;
                     } else if (message.contains(afk)) {
@@ -89,7 +82,7 @@ public class Processor extends Thread{
         this.doEvent = doEvent;
     }
 
-    public void setCanRandomize(boolean canRandomize){
-        this.canRandomize = canRandomize;
+    public void setMakeCandy(boolean makeCandy){
+        this.makeCandy = makeCandy;
     }
 }

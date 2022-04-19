@@ -1,13 +1,13 @@
 package goodgame.cahnnel;
 
+import goodgame.Father;
 import goodgame.Time;
-import goodgame.connect.TestApp;
 
 import java.util.List;
 import java.util.Random;
 
-import static goodgame.Main.candy;
-import static goodgame.Main.channel;
+import static goodgame.Father.candy;
+import static goodgame.Father.channel;
 
 public class MessageText {
     public static String lickBody(String name, String name1) {
@@ -42,7 +42,7 @@ public class MessageText {
 
     public static String candy(String name) {
         if (candy.equals("")){
-            return "До назначения карамельки осталось всего " + Time.getTime(TestApp.event) + " \",";
+            return "До назначения карамельки осталось всего " + Time.getTime(Father.event) + " \",";
 //            return "Карамельку ещё не выбрали :sad: \",";
         }
 
@@ -76,7 +76,7 @@ public class MessageText {
         for (String name: usersList){
             txt += name + ", ";
         }
-        if ((TestApp.event/5)%2==0) {
+        if ((Father.event/5)%2==0) {
             System.out.println("==0");
             return txt + " а ну быстро лизнули стримера! :verloingold:\",";
         }
@@ -90,5 +90,9 @@ public class MessageText {
             txt += name + ", ";
         }
         return txt + " именем " + undead + " ! Лизитесь! \",";
+    }
+
+    public static String taunt(){
+        return " ну посмотрите на " + channel.getName() + ", так и хочется !лизьнуть \",";
     }
 }

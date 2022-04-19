@@ -9,7 +9,7 @@ public class ChUserList {
         String usersStr;
         List<String> userList = new ArrayList();
         int usersInt;
-        System.out.println("проблемное сообщение \n" + message);
+//        System.out.println("проблемное сообщение \n" + message);
         usersStr = message.substring(message.indexOf("users_in") + "users_in_channel\":".length());
         usersInt = Integer.parseInt(usersStr.substring(0, usersStr.indexOf(",")));
         System.out.println("всего людей " + usersInt);

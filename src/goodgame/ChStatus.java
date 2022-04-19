@@ -1,6 +1,6 @@
 package goodgame;
 
-import goodgame.connect.TestApp;
+import goodgame.connect.ChatListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class ChStatus {
     public static String token = "";
 
     public static Boolean giveMeStatus() throws IOException {
-        URL url = new URL("http://goodgame.ru/api/getchannelstatus?id="+Main.channel.getId()+"&fmt=json");
+        URL url = new URL("http://goodgame.ru/api/getchannelstatus?id="+Father.channel.getId()+"&fmt=json");
         int x = 0;
         while (x < 5) {
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -52,7 +52,7 @@ public class ChStatus {
         }
         System.out.println("стрим выключен");
         System.exit(0);
-        TestApp.websocketClientEndpointClass.removeMessageHandler();
+        ChatListener.websocketClientEndpointClass.removeMessageHandler();
 
             return false;
 

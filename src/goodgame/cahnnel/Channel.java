@@ -1,10 +1,11 @@
 package goodgame.cahnnel;
 
+import goodgame.Requests;
+
 public class Channel {
     String id;
     String name;
     long period;
-    String link;
     int status;
 
     public Channel(String id, String name, long period, String uStatus) {
@@ -12,6 +13,7 @@ public class Channel {
         this.name = name;
         this.period = period;
         this.status = userStatus(uStatus);
+        Requests.id = id;
     }
 
     public String getId() {

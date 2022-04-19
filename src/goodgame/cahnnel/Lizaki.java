@@ -27,6 +27,6 @@ public class Lizaki {
     }
 
     public static String smilesAll(){
-        return ":powernet3::powernet7::verloinsilver::verloin23::frozzagold::hell_girl17::wolwerine047::brat_loken8:";
+        return " :powernet3::powernet7::verloinsilver::verloin23::frozzagold::hell_girl17::wolwerine047::brat_loken8:\",";
     }
 }

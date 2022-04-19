@@ -1,28 +1,28 @@
 package goodgame.connect;
 
 
+import goodgame.Requests;
 import goodgame.cahnnel.Channel;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimerTask;
 
-public class TestApp {
+public class ChatListener {
     public static WebsocketClientEndpointClass websocketClientEndpointClass;
     public static String message = "";
     public static Date lastTime;
     public static String text;
     public static ArrayList<String> queueMessages = new ArrayList<>();
-    public static TimerTask task = null;
-    public static int event = 3; // 3 - базовое, если 0 то будет выбор карамельки
+//    public static TimerTask task = null;
+    public static int event = 4; // 4 - базовое, если 0 то будет выбор карамельки
     public static String afk = "{\"type\":\"channel_counters";
     public static int afkCounter = 0;
     public static boolean doEvent = false;
     public static boolean canRandomize = false; //false - лизнуть часть чата, true - лизатий дня
 
-    public static void testApp(String token, Channel channel){
+    public static void app(String token, Channel channel){
         try {
             System.out.println("TestApp");
             // open websocket
@@ -66,24 +66,12 @@ public class TestApp {
             }
 
             // send message to websocket
-            websocketClientEndpointClass.sendMessage("{" +
-                    "    \"type\": \"auth\"," +
-                    "    \"data\": {" +
-                    "        \"user_id\": \"281724\"," +
-                    "        \"token\": \"" + token + "\"" +
-                    "    }" +
-                    "}");
+            websocketClientEndpointClass.sendMessage(Requests.auth(token));
 
-            // wait 5 seconds for messages from websocket
+            // wait 2 seconds for messages from websocket
             Thread.sleep(2000);
 
-            websocketClientEndpointClass.sendMessage("{" +
-                    "    \"type\": \"join\"," +
-                    "    \"data\": {" +
-                    "        \"channel_id\": \"" + channel.getId() + "\"," +
-                    "        \"hidden\": false" +
-                    "    }\n" +
-                    "}");
+            websocketClientEndpointClass.sendMessage(Requests.join());
 
 //            Thread.sleep(2000);
 //

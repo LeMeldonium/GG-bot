@@ -1,17 +1,17 @@
 package goodgame;
 
-import goodgame.connect.TestApp;
+import goodgame.connect.ChatListener;
 
 public class Time {
 
     public static String getTime(int plus) {
         plus++;
         System.out.println(plus + " plus");
-        int pH = (int) (plus * Main.channel.getPeriod() / 3600000);
+        int pH = (int) (plus * Father.channel.getPeriod() / 3600000);
         System.out.println(pH + " plus chasov");
-        int pM = (int) (plus * Main.channel.getPeriod() % 60000);
+        int pM = (int) (plus * Father.channel.getPeriod() % 60000);
         System.out.println(pM + " plus minut");
-        long delta = TestApp.task.scheduledExecutionTime() + Main.channel.getPeriod() - System.currentTimeMillis();
+        long delta = Father.task.scheduledExecutionTime() + Father.channel.getPeriod() - System.currentTimeMillis();
         if (delta < 0) {
             delta *= -1;
         }

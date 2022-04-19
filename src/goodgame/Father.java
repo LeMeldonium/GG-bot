@@ -17,7 +17,7 @@ public class Father {
     public static String message;
     public static String candy = "";
     public static List<String> list = new LinkedList<>();
-    public static List<String> undeadList = new LinkedList<>();
+    public static List<String> undeadList = new LinkedList<>(); //выключил из-за проблем с размером сообщений
     public static TimerThread timerThread;
     public static TimerTask task = null;
     public static int event = 3; // 4 - базовое, если 0 то будет выбор карамельки

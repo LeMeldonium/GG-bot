@@ -38,7 +38,7 @@ public class Requests {
                 "    \"type\": \"send_message\",\n" +
                 "    \"data\": {\n" +
                 "        \"channel_id\": \"" + id + "\",\n" +
-                "        \"text\": \"" + text +
+                "        \"text\": \"" + text + "\",\n" +
                 "        \"hideIcon\": false," +
                 "        \"mobile\": false" +
                 "    }\n" +

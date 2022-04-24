@@ -3,7 +3,6 @@ package goodgame.multithread;
 import goodgame.ChStatus;
 import goodgame.Commands;
 import goodgame.EventWithList;
-import goodgame.Requests;
 import goodgame.cahnnel.Channel;
 
 import static goodgame.connect.ChatListener.queueMessages;
@@ -36,35 +35,35 @@ public class Processor extends Thread{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        websocketClientEndpointClass.sendMessage(Requests.getUserList());//костыль
+//        websocketClientEndpointClass.sendMessage(Requests.getUserList());//костыль
         while (true){ //проверка на заполененность очереди
                 if (!queueMessages.isEmpty()) {
                     message = queueMessages.get(0);
+                    System.out.println(message);
                     if (message.contains("{\"type\":\"message")) {
                         text = Commands.someoneAskedMe(message);
                         if (text != null) {
                             websocketClientEndpointClass.sendMessage(text);
                         }
                         afkCounter = 0;
-                    } else if (message.contains("{\"type\":\"users_list")) {
-                        EventWithList.wasRefreshedNow = false;
-                        System.out.println("получил список юзверей");
-                        if (doEvent) {
-                            websocketClientEndpointClass.sendMessage(EventWithList.withList(message, makeCandy));
-                            doEvent = false;
-                            makeCandy = false;
-                        } else {
-                            EventWithList.refreshList(message);
+//                    } else if (message.contains("{\"type\":\"users_list")) {
+//                        EventWithList.wasRefreshedNow = false;
+//                        System.out.println("получил список юзверей");
+//                        if (doEvent) {
 //                            websocketClientEndpointClass.sendMessage(EventWithList.withList(message, makeCandy));
-                        }
-                        afkCounter = 0;
+//                            doEvent = false;
+//                            makeCandy = false;
+//                        } else {
+//                            EventWithList.refreshList(message);
+////                            websocketClientEndpointClass.sendMessage(EventWithList.withList(message, makeCandy));
+//                        }
+//                        afkCounter = 0;
                     } else if (message.contains(afk)) {
                         afkCounter++;// отключится примерно через 5 минут так как автоматические
                         if (afkCounter > 5 * 6) {  // сообщения приходят каждые 10 секунд
                             ChStatus.getStatus();
                         }
                     }
-                    System.out.println(message);
                     queueMessages.remove(0);
                 }
             try {
@@ -74,6 +73,20 @@ public class Processor extends Thread{
             }
         }
     }
+
+    public void aaaplayer(String message){
+//        EventWithList.wasRefreshedNow = true;
+        System.out.println("получил список юзверей");
+        if (doEvent) {
+            websocketClientEndpointClass.sendMessage(EventWithList.withList(message, makeCandy));
+            doEvent = false;
+            makeCandy = false;
+        } else {
+            EventWithList.refreshList(message);
+//                            websocketClientEndpointClass.sendMessage(EventWithList.withList(message, makeCandy));
+        }
+    }
+
     public long getPeriod(){
         return channel.getPeriod();
     }

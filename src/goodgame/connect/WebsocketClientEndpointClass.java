@@ -1,5 +1,7 @@
 package goodgame.connect;
 
+import goodgame.Father;
+
 import javax.websocket.*;
 import java.net.URI;
 
@@ -48,6 +50,7 @@ import java.net.URI;
             System.out.println("closing websocket");
             this.userSession = null;
             System.out.println("disconnected");
+            Father.closeSad();
         }
 
         /**
@@ -96,5 +99,15 @@ import java.net.URI;
         public static interface MessageHandler {
 
             public void handleMessage(String message);
+        }
+
+        /**
+         *
+         */
+        public boolean getUserSession(){
+            if (userSession!=null){
+                return true;
+            }
+            return false;
         }
     }

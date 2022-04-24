@@ -8,10 +8,15 @@ public class ChUserList {
     public static List<String> giveMeUserList(String message) {
         String usersStr;
         List<String> userList = new ArrayList();
-        int usersInt;
+        int usersInt = 0;
 //        System.out.println("проблемное сообщение \n" + message);
         usersStr = message.substring(message.indexOf("users_in") + "users_in_channel\":".length());
-        usersInt = Integer.parseInt(usersStr.substring(0, usersStr.indexOf(",")));
+        try {
+            usersInt = Integer.parseInt(usersStr.substring(0, usersStr.indexOf(",")));
+        } catch (NumberFormatException e) {
+            System.err.println(usersStr);
+            e.printStackTrace();
+        }
         System.out.println("всего людей " + usersInt);
         //usersStr = usersStr.substring(usersStr.indexOf("[{"));
         for (int i = 0; i < usersInt; i++) {
@@ -19,6 +24,7 @@ public class ChUserList {
             userList.add(usersStr.substring(0, usersStr.indexOf("\",")));
             //System.out.println(i);
         }
+        System.out.println("отправил юзерлист");
         return userList;
     }
 

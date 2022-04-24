@@ -3,6 +3,7 @@ package goodgame.connect;
 
 import goodgame.Requests;
 import goodgame.cahnnel.Channel;
+import goodgame.multithread.Processor;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,7 +23,7 @@ public class ChatListener {
     public static boolean doEvent = false;
     public static boolean canRandomize = false; //false - лизнуть часть чата, true - лизатий дня
 
-    public static void app(String token, Channel channel){
+    public static void app(String token, Channel channel, Processor processor){
         try {
             System.out.println("TestApp");
             // open websocket
@@ -33,7 +34,11 @@ public class ChatListener {
                 websocketClientEndpointClass.addMessageHandler(new WebsocketClientEndpointClass.MessageHandler() {
                     public void handleMessage(String message) {
 
-                        queueMessages.add(message);
+                        if (message.contains("{\"type\":\"users_list")){
+                            processor.aaaplayer(message);
+                        } else {
+                            queueMessages.add(message);
+                        }
 
 //                        if (message.contains("{\"type\":\"message")) {
 //                            text = Main.someoneAskedMe(message);

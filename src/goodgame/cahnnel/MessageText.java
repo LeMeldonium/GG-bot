@@ -14,7 +14,7 @@ public class MessageText {
         Random random = new Random();
         int rnd = random.nextInt(5*10) - 1;
         return switch (rnd%5) {
-            case (-1) -> ":powernet3:" + name + ", :powernet7:" + name1 + " делает ультимативный лизь ";
+            case (-1) -> ":powernet3: " + name + ", :powernet7:" + name1 + " делает ультимативный лизь ";
             case (0) -> name + ", " + Lizaki.smile(7, channel.getName()) + "  с любовью лизь от " + name1;
             case (1) -> name + ", " + Lizaki.smile(7, channel.getName()) + "  со слюнями лизь от " + name1;
             case (2) -> name + ", " + Lizaki.smile(7, channel.getName()) + "  нежный лизь от " + name1;
@@ -46,11 +46,11 @@ public class MessageText {
 //            return "Карамельку ещё не выбрали :sad: ";
         }
 
-        return candy + ", " + Lizaki.smile(7, channel.getName()) + name + "с довольным лицом лижет карамельку ";
+        return candy + ", " + Lizaki.smile(7, channel.getName()) + name + " с довольным лицом лижет карамельку ";
     }
 
     public static String candyOfTheStream(String name) {
-        return name + ", выбирается карамелькой дня " + ", -лизь к бою! ";
+        return name + ", выбирается карамелькой дня" + ", -лизь к бою! ";
     }
 
     public static String JACKPOT(String name) {
@@ -76,11 +76,10 @@ public class MessageText {
         for (String name: usersList){
             txt += name + ", ";
         }
-        if ((Father.event/5)%2==0) {
+        if ((Father.event%5 - 1) ==3) {
             System.out.println("==0");
             return txt + " а ну быстро лизнули стримера! :verloingold:";
         }
-        System.out.println("!=0");
         return txt + " сделал лизь - сердцу радость :brat_loken5:";
     }
 

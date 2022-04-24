@@ -26,7 +26,6 @@ public class TimerThread extends Thread{
         this.processor = processor;
     }
 
-
     @Override
     public void run() { //глупая версия таймера
             Father.task = new TimerTask() {
@@ -44,7 +43,7 @@ public class TimerThread extends Thread{
                                 processor.setMakeCandy(true);
                                 processor.setDoEvent(true);
                                 websocketClientEndpointClass.sendMessage(Requests.getUserList());
-                                Father.event = 23;
+                                Father.event = 33;
                             }
                             default -> websocketClientEndpointClass.sendMessage(Requests.sendMessage(Pictures.liveWithLic()));
                         }
@@ -59,7 +58,7 @@ public class TimerThread extends Thread{
 
             Timer timer = new Timer("Timer");
             long delay = 1000L;
-            timer.scheduleAtFixedRate (Father.task, delay, 60*60*1000L);
+            timer.scheduleAtFixedRate (Father.task, delay, period);
 
 
 //            try {

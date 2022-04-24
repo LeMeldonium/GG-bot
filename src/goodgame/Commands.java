@@ -49,17 +49,25 @@ public class Commands {
             name = newMessage.substring(0, newMessage.indexOf(','));
             text = Requests.sendMessage(MessageText.JACKPOT(name));
         } else if (message.contains("!хохо")){
+            EventWithList.mustRefreshList = true;
             ChatListener.websocketClientEndpointClass.sendMessage(Requests.getUserList());
             newMessage = message.substring(message.lastIndexOf("user_name")+12);
             name = newMessage.substring(0, newMessage.indexOf('\"'));
             String lickedName = "";
             int count = 0;
             while (lickedName.equals("") || lickedName.equals(name)){
-                lickedName = EventWithList.randomUser(message);
-                if (count == 4){
-                    return Requests.sendMessage("  не нашёл кого лизнуть :sad: ");
+                if (!EventWithList.mustRefreshList) {
+                    lickedName = EventWithList.randomUser(message);
+                    if (count == 4) {
+                        return Requests.sendMessage("  не нашёл кого лизнуть :sad: ");
+                    }
+                    count++;
                 }
-                count++;
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             text = Requests.sendMessage(MessageText.randomLick(lickedName, name));
 

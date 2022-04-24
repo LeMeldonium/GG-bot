@@ -9,7 +9,8 @@ import static goodgame.Father.candy;
 
 public class EventWithList {
     public static List <String> userList = null;
-    public static boolean wasRefreshedNow = false;
+//    public static boolean wasRefreshedNow = false;
+    public static boolean mustRefreshList = false;
 
     public static String withList(String message, boolean makeCandy){
         Random random = new Random();
@@ -37,7 +38,7 @@ public class EventWithList {
 
     public static String randomUser(String message){
         Random random = new Random();
-        if (!wasRefreshedNow) {
+        if (mustRefreshList) {
             refreshList(message);
         }
         return userList.get(random.nextInt(userList.size()));
@@ -46,6 +47,7 @@ public class EventWithList {
     public static void refreshList(String message){
         System.out.println("обновил список");
         userList = ChUserList.giveMeUserList(message);
-        wasRefreshedNow = true;
+//        wasRefreshedNow = true;
+        mustRefreshList = false;
     }
 }

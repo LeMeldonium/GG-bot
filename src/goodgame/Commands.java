@@ -59,7 +59,7 @@ public class Commands {
                 if (!EventWithList.mustRefreshList) {
                     lickedName = EventWithList.randomUser(message);
                     if (count == 4) {
-                        return Requests.sendMessage("  не нашёл кого лизнуть :sad: ");
+                        return Requests.sendMessage(name + ",  не нашёл кого лизнуть :sad: ");
                     }
                     count++;
                 }
@@ -71,6 +71,13 @@ public class Commands {
             }
             text = Requests.sendMessage(MessageText.randomLick(lickedName, name));
 
+        } else if (message.contains("стоп!")){
+            newMessage = message.substring(message.lastIndexOf("user_name")+12);
+            name = newMessage.substring(0, newMessage.indexOf('\"'));
+            if (name.equals("LeMeldonium") || name.equals(channel.getName())){
+                System.out.println("выключился по приказу " + name);
+                System.exit(0);
+            }
         }
         return text;
     }

@@ -1,5 +1,7 @@
 package goodgame.cahnnel;
 
+import goodgame.Father;
+
 import java.util.Random;
 
 public class Lizaki {
@@ -7,14 +9,14 @@ public class Lizaki {
         Random random = new Random();
         int number = 7;
         int rnd;
-        if (num == 8 && name.contains("Verloin")){
+        if (num == 8){
             rnd = random.nextInt(number * 6) - 1;
         } else {
             rnd = random.nextInt(number * 3);
         }
         rnd %= 7;
         return switch (rnd) {
-            case (-1) -> "https://media.discordapp.net/attachments/283554046550474752/732977097945120859/771Xjpb413.gif";
+            case (-1) -> Father.channel.getSmile();
             case (0) -> ":verloinsilver:";
             case (1) -> ":verloin23:";
             case (2) -> ":frozzagold:";

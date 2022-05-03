@@ -3,6 +3,7 @@ package goodgame;
 
 import goodgame.cahnnel.Channel;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Main {
     public static List<String> list = new LinkedList<>();
     public static List<String> undeadList = new LinkedList<>();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 
 //        channel = new Channel("15365", "Verloin", 45*60*1000L, "undead");
 //        channel = new Channel("183946", "LollyDragon", 45*60*1000L, "king");
@@ -31,7 +32,9 @@ public class Main {
                         * но я не убедился в надобности этого. Сейчас при реконнекте не теряется
                         * соединение с чатом
                         */
-            Father.letsRock();
+            Father.prepare();
+//            Father.letsRock();
+//            Father.whatNext();
 //            processor.start();
 //            System.out.println(GetToken.getToken());
             Thread.sleep(300000);

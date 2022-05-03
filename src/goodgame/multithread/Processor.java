@@ -61,6 +61,7 @@ public class Processor extends Thread{
                     } else if (message.contains(afk)) {
                         afkCounter++;// отключится примерно через 5 минут так как автоматические
                         if (afkCounter > 5 * 6) {  // сообщения приходят каждые 10 секунд
+                            System.out.println("инициатор - Processor.64");
                             ChStatus.getStatus();
                         }
                     }

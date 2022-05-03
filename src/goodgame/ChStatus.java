@@ -39,7 +39,7 @@ public class ChStatus {
             }
             token = content.toString();
             token = token.substring(token.indexOf("\"status\":") + 10, token.indexOf("\"status\":") + 14);
-            System.out.println("status = " + token);
+            System.out.println("status.42 = " + token);
             if (token.contains("Live")) {
                 return true;
             }
@@ -50,8 +50,9 @@ public class ChStatus {
                 e.printStackTrace();
             }
         }
-        System.out.println("стрим выключен");
-        System.exit(0);
+        Father.closeSad();
+        System.out.println("стрим выключен.53");
+//        System.exit(0);
         ChatListener.websocketClientEndpointClass.removeMessageHandler();
 
             return false;
@@ -68,6 +69,7 @@ public class ChStatus {
     }
 
     public boolean fastChannelStatus() throws IOException {
+        String status = "";
         URL url = new URL("http://goodgame.ru/api/getchannelstatus?id=" + Father.channel.getId() + "&fmt=json");
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setRequestMethod("POST");
@@ -89,18 +91,19 @@ public class ChStatus {
             content.append(inputLine);
         }
         token = content.toString();
-        token = token.substring(token.indexOf("\"status\":") + 10, token.indexOf("\"status\":") + 14);
-        System.out.println("status = " + token);
-        if (token.contains("Live")) {
-            return true;
-        }
         try {
-            Thread.sleep(60000);
-        } catch (InterruptedException e) {
+            status = token.substring(token.indexOf("\"status\":") + 10, token.indexOf("\"status\":") + 14);
+        } catch (Exception e) {
+            System.out.println(token);
             e.printStackTrace();
         }
-        System.out.println("стрим выключен");
-        System.exit(0);
+        System.out.println("status.100 = " + status);
+        if (status.contains("Live")) {
+            return true;
+        }
+        System.out.println("стрим выключен.104");
+//        System.exit(0);
+//        Father.closeSad();
         ChatListener.websocketClientEndpointClass.removeMessageHandler();
 
         return false;

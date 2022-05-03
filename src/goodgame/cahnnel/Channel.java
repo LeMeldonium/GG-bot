@@ -7,13 +7,15 @@ public class Channel {
     String name;
     long period;
     int status;
+    String smile;
 
-    public Channel(String id, String name, long period, String uStatus) {
+    public Channel(String id, String name, long period, String uStatus, String smile) {
         this.id = id;
         this.name = name;
         this.period = period;
         this.status = userStatus(uStatus);
         Requests.id = id;
+        this.smile = smile;
     }
 
     public String getId() {
@@ -30,6 +32,10 @@ public class Channel {
 
     public int getStatus() {
         return status;
+    }
+
+    public String getSmile() {
+        return smile;
     }
 
     public int userStatus(String uStatus){

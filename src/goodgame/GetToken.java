@@ -18,8 +18,8 @@ public class GetToken {
         http.setRequestMethod("POST");
         http.setDoOutput(true);
         http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-        String data = "login=LeMeldonium&password=1!Qazsedcfvb";
+//        login=LeMeldonium&password=1!Qaz2@Wsx3#Edc
+        String data = Secret.secret;
 
         byte[] out = data.getBytes(StandardCharsets.UTF_8);
 
@@ -36,7 +36,9 @@ public class GetToken {
             token = token.substring(token.indexOf("\"token\":\"") + 9);
             token = token.substring(0, token.indexOf("\""));
             System.out.println(token);
-
+            if (token.isEmpty()){
+                System.exit(1);
+            }
             return token;
         } catch (final Exception ex) {
             ex.printStackTrace();

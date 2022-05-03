@@ -104,7 +104,7 @@ import java.net.URI;
         /**
          *
          */
-        public boolean getUserSession(){
+        public boolean isUserSessionNull(){
             if (userSession!=null){
                 return true;
             }

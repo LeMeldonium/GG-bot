@@ -30,6 +30,7 @@ public class TimerThread extends Thread{
     public void run() { //глупая версия таймера
             Father.task = new TimerTask() {
                 public void run() {
+                    System.out.println("инициатор - TimerThread.33");
                     if (ChStatus.getStatus()) { //каждый "период" ивент уменьшается на 1. если ивент -1
                         switch (Father.event % 5 - 1) { //то срабатывает выбор карамельки (разовый ивент)
                             case (3), (-1) -> {
@@ -51,7 +52,7 @@ public class TimerThread extends Thread{
                         System.out.println("candy = " + Father.candy);
                         Father.event--;
                     } else {
-                        System.exit(0);
+//                        System.exit(0);
                     }
                 }
             };

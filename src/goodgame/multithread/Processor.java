@@ -16,6 +16,7 @@ public class Processor extends Thread{
      *
      */
 
+    public String lastMessage = "";
     public boolean doEvent = false;
     public boolean makeCandy = false;//false - лизнуть часть чата, true - карамелька дня
     String afk = "{\"type\":\"channel_counters";
@@ -28,6 +29,7 @@ public class Processor extends Thread{
 
     @Override
     public void run() {
+        System.out.println("процессор стартанул");
         String text;
         String message;
         try {
@@ -39,10 +41,11 @@ public class Processor extends Thread{
         while (true){ //проверка на заполененность очереди
                 if (!queueMessages.isEmpty()) {
                     message = queueMessages.get(0);
-                    System.out.println(message);
+                    System.out.println("очередь." + queueMessages.size() + message);
                     if (message.contains("{\"type\":\"message")) {
                         text = Commands.someoneAskedMe(message);
-                        if (text != null) {
+                        if (!lastMessage.contains(text) && text != null) {
+                            lastMessage = text;
                             websocketClientEndpointClass.sendMessage(text);
                         }
                         afkCounter = 0;

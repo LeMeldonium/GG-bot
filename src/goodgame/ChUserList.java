@@ -21,7 +21,13 @@ public class ChUserList {
         //usersStr = usersStr.substring(usersStr.indexOf("[{"));
         for (int i = 0; i < usersInt; i++) {
             usersStr = usersStr.substring(usersStr.indexOf("name\":") + "name\":'".length());
-            userList.add(usersStr.substring(0, usersStr.indexOf("\",")));
+            try {
+                userList.add(usersStr.substring(0, usersStr.indexOf("\",")));
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("ChUserList.28");
+                ChStatus.getStatus();
+            }
             //System.out.println(i);
         }
         System.out.println("отправил юзерлист");

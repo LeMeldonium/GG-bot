@@ -37,6 +37,7 @@ public class GetToken {
             token = token.substring(0, token.indexOf("\""));
             System.out.println(token);
             if (token.isEmpty()){
+                System.out.println("не смог получить токен");
                 System.exit(1);
             }
             return token;

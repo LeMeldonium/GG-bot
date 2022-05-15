@@ -4,8 +4,8 @@ import goodgame.Father;
 
 import java.util.Random;
 
-public class Lizaki {
-    public static String smile(int num, String name){
+public class Smiles {
+    public static String lizaki(int num, String name){
         Random random = new Random();
         int number = 7;
         int rnd;
@@ -25,6 +25,20 @@ public class Lizaki {
             case (5) -> ":brat_loken8:";
             case (6) -> ":powernet7:";
             default -> "brat_loken5";
+        };
+    }
+
+    public static String kusaki(){
+        String str = "";
+        Random random = new Random();
+        int number = 10;
+        int rnd;
+        rnd = random.nextInt(number * 10);
+        rnd %= 2;
+        return switch (rnd) {
+            case (0) -> str += ":tanushkavl8:";
+            case (1) -> str += ":hell_girl18:";
+            default -> str += ":hell_girl18:";
         };
     }
 

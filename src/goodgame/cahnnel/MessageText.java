@@ -12,28 +12,51 @@ import static goodgame.Father.channel;
 public class MessageText {
     public static String lickBody(String name, String name1) {
         Random random = new Random();
-        int rnd = random.nextInt(5*10) - 1;
-        return switch (rnd%5) {
-            case (-1) -> ":powernet3: " + name + ", :powernet7:" + name1 + " делает ультимативный лизь ";
-            case (0) -> name + ", " + Lizaki.smile(7, channel.getName()) + "  с любовью лизь от " + name1;
-            case (1) -> name + ", " + Lizaki.smile(7, channel.getName()) + "  со слюнями лизь от " + name1;
-            case (2) -> name + ", " + Lizaki.smile(7, channel.getName()) + "  нежный лизь от " + name1;
-            case (3) -> name + ", " + Lizaki.smile(7, channel.getName()) + "  просто лизь от " + name1;
-            case (4) -> name + ", " + Lizaki.smile(7, channel.getName()) + "  почему-то мерзкий лизь от " + name1 + " , наверно язык был шершавый :verloin12: ";
-            default -> name + ", " + Lizaki.smile(7, channel.getName()) + "  нежный от " + name1;
-        };
+        int rnd = random.nextInt(53);
+        if (rnd < 1){
+            return ":powernet3: " + name + ", :powernet7:" + name1 + " делает ультимативный лизь ";
+        } else if (rnd < 8){
+            return name + ", " + Smiles.lizaki(7, channel.getName()) + "  с любовью лизь от " + name1;
+        } else if (rnd < 15){
+            return name + ", " + Smiles.lizaki(7, channel.getName()) + "  со слюнями лизь от " + name1;
+        }else if (rnd < 22){
+            return name + ", " + Smiles.lizaki(7, channel.getName()) + "  нежный лизь от " + name1;
+        } else if (rnd < 29){
+            return name + ", " + Smiles.lizaki(7, channel.getName()) + "  просто лизь от " + name1;
+        } else if (rnd < 36){
+            return name + ", " + Smiles.lizaki(7, channel.getName()) + "  тёплый и нежный лизь от " + name1;
+        } else if (rnd < 41){
+            return name + ", " + Smiles.lizaki(7, channel.getName()) + "  почему-то мерзкий лизь от " + name1 + " , наверно язык был шершавый :verloin12: ";
+        } else if (rnd < 47){
+            return name + ", " + Smiles.kusaki() + name1 + " так увлекается что случайно кусает ";
+        } else if (rnd < 53){
+            return name + ", " + Smiles.kusaki() + " это был очень коварный кусь от " + name1;
+        }
+//        return switch (rnd%5) {
+//            case (-1) -> ":powernet3: " + name + ", :powernet7:" + name1 + " делает ультимативный лизь ";
+//            case (0) -> name + ", " + Smiles.lizaki(7, channel.getName()) + "  с любовью лизь от " + name1;
+//            case (1) -> name + ", " + Smiles.lizaki(7, channel.getName()) + "  со слюнями лизь от " + name1;
+//            case (2) -> name + ", " + Smiles.lizaki(7, channel.getName()) + "  нежный лизь от " + name1;
+//            case (3) -> name + ", " + Smiles.lizaki(7, channel.getName()) + "  просто лизь от " + name1;
+//            case (4) -> name + ", " + Smiles.lizaki(7, channel.getName()) + "  тёплый и нежный лизь от " + name1;
+//            case (5) -> name + ", " + Smiles.lizaki(7, channel.getName()) + "  почему-то мерзкий лизь от " + name1 + " , наверно язык был шершавый :verloin12: ";
+//            case (6) -> name + ", " + Smiles.kusaki() + name1 + " так увлекается что случайно кусает ";
+//            case (7) -> name + ", " + Smiles.kusaki() + " это был очень коварный кусь от " + name1;
+//            default -> name + ", " + Smiles.lizaki(7, channel.getName()) + "  нежный от " + name1;
+//        };
+        return name + ", " + Smiles.lizaki(7, channel.getName()) + "  нежный от " + name1;
     }
 
     public static String lickStreamer(String name) {
             if (name.equals(channel.getName())) {
-                return channel.getName() + ", " + Lizaki.smile(8, channel.getName()) + " ШОК! " + Users.userName(name) + " лижет себя";
+                return channel.getName() + ", " + Smiles.lizaki(8, channel.getName()) + " ШОК! " + Users.userName(name) + " лижет себя";
             } else {
-                return channel.getName() + ", " + Lizaki.smile(8, channel.getName()) + " " + Users.userName(name) + " лижет стримера";
+                return channel.getName() + ", " + Smiles.lizaki(8, channel.getName()) + " " + Users.userName(name) + " лижет стримера";
             }
     }
 
     public static String lickSelf(String name) {
-        return name + ", " + Lizaki.smile(7, channel.getName()) + "";
+        return name + ", " + Smiles.lizaki(7, channel.getName()) + "";
     }
 
     public static String lickHelp() {
@@ -46,7 +69,7 @@ public class MessageText {
 //            return "Карамельку ещё не выбрали :sad: ";
         }
 
-        return candy + ", " + Lizaki.smile(7, channel.getName()) + name + " с довольным лицом лижет карамельку ";
+        return candy + ", " + Smiles.lizaki(7, channel.getName()) + name + " с довольным лицом лижет карамельку ";
     }
 
     public static String candyOfTheStream(String name) {
@@ -61,9 +84,9 @@ public class MessageText {
         Random random = new Random();
         int rnd = random.nextInt(3);
         return switch (rnd) {
-            case (0) -> name + ", " + Lizaki.smile(7, channel.getName()) + nameLicker + " делает неожиданный лизь ";
-            case (1) -> name + ", " + Lizaki.smile(7, channel.getName()) + nameLicker + " лизнул и скрылся ";
-            default -> name + ", " + Lizaki.smile(7, channel.getName()) + " быстро, резко, дерзко " + nameLicker + " делает лизь ";
+            case (0) -> name + ", " + Smiles.lizaki(7, channel.getName()) + nameLicker + " делает неожиданный лизь ";
+            case (1) -> name + ", " + Smiles.lizaki(7, channel.getName()) + nameLicker + " лизнул и скрылся ";
+            default -> name + ", " + Smiles.lizaki(7, channel.getName()) + " быстро, резко, дерзко " + nameLicker + " делает лизь ";
         };
     }
 

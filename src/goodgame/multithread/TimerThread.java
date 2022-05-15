@@ -4,12 +4,13 @@ import goodgame.ChStatus;
 import goodgame.Father;
 import goodgame.Pictures;
 import goodgame.Requests;
-import goodgame.cahnnel.Lizaki;
+import goodgame.cahnnel.Smiles;
 import goodgame.cahnnel.MessageText;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static goodgame.connect.ChatListener.event;
 import static goodgame.connect.ChatListener.websocketClientEndpointClass;
 
 public class TimerThread extends Thread{
@@ -37,7 +38,7 @@ public class TimerThread extends Thread{
                                 processor.setDoEvent(true);
                                 websocketClientEndpointClass.sendMessage(Requests.getUserList());
                             }
-                            case (2) -> websocketClientEndpointClass.sendMessage(Requests.sendMessage(Lizaki.smilesAll()));
+                            case (2) -> websocketClientEndpointClass.sendMessage(Requests.sendMessage(Smiles.smilesAll()));
                             case (1) -> websocketClientEndpointClass.sendMessage(Requests.sendMessage(Pictures.liveWithLic()));
                             case (0) -> websocketClientEndpointClass.sendMessage(Requests.sendMessage(MessageText.taunt()));
                             case (-2) -> {
@@ -52,13 +53,14 @@ public class TimerThread extends Thread{
                         System.out.println("candy = " + Father.candy);
                         Father.event--;
                     } else {
+                        event--;
 //                        System.exit(0);
                     }
                 }
             };
 
             Timer timer = new Timer("Timer");
-            long delay = 1000L;
+            long delay = 10*1000L;
             timer.scheduleAtFixedRate (Father.task, delay, period);
 
 

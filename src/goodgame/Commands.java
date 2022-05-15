@@ -45,9 +45,11 @@ public class Commands {
             name = newMessage.substring(0, newMessage.indexOf('\"'));
             text = Requests.sendMessage(MessageText.candy(name));
         } else if (message.contains("ДЖЕКПОТ")){
-            newMessage = message.substring(message.lastIndexOf("text\":")+7);
-            name = newMessage.substring(0, newMessage.indexOf(','));
-            text = Requests.sendMessage(MessageText.JACKPOT(name));
+            if (message.contains("user_name\":\"bot_fraer")) {
+                newMessage = message.substring(message.lastIndexOf("text\":") + 7);
+                name = newMessage.substring(0, newMessage.indexOf(','));
+                text = Requests.sendMessage(MessageText.JACKPOT(name));
+            }
         } else if (message.contains("!хохо")){
             EventWithList.mustRefreshList = true;
             ChatListener.websocketClientEndpointClass.sendMessage(Requests.getUserList());

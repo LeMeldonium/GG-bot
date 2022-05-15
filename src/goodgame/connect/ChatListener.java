@@ -2,7 +2,6 @@ package goodgame.connect;
 
 
 import goodgame.Requests;
-import goodgame.cahnnel.Channel;
 import goodgame.multithread.Processor;
 
 import java.net.URI;
@@ -10,7 +9,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ChatListener {
+public class ChatListener extends Thread{
     public static WebsocketClientEndpointClass websocketClientEndpointClass;
     public static String message = "";
     public static Date lastTime;
@@ -23,7 +22,12 @@ public class ChatListener {
     public static boolean doEvent = false;
     public static boolean canRandomize = false; //false - лизнуть часть чата, true - лизатий дня
 
-    public static void app(String token, Channel channel, Processor processor){
+    public ChatListener(String token, Processor processor){
+        queueMessages.clear();
+        app(token, processor);
+    }
+
+    public void app(String token, Processor processor){
         try {
             System.out.println("TestApp");
             // open websocket
@@ -31,12 +35,14 @@ public class ChatListener {
 
             // add listener
             try {
+                System.out.println("прислушиваюсь");
                 websocketClientEndpointClass.addMessageHandler(new WebsocketClientEndpointClass.MessageHandler() {
                     public void handleMessage(String message) {
 
                         if (message.contains("{\"type\":\"users_list")){
                             processor.aaaplayer(message);
                         } else {
+                            System.out.println("сообщение из чата");
                             queueMessages.add(message);
                         }
 
@@ -146,5 +152,10 @@ Thread.sleep(3500);
         } catch (URISyntaxException ex) {
             System.err.println("URISyntaxException exception: " + ex.getMessage());
         }
+    }
+
+    public static void clearQ(){
+        System.out.println("чищу очередь");
+        queueMessages = new ArrayList<>();
     }
 }

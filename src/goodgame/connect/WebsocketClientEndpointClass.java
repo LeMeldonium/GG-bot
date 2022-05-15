@@ -54,6 +54,19 @@ import java.net.URI;
         }
 
         /**
+         * Callback hook for Connection close events.
+         *
+         * param userSession the userSession which is getting closed.
+         * param reason      the reason for connection close
+         */
+        public void close() {
+            System.out.println("closing websocket");
+            this.userSession = null;
+            System.out.println("disconnected");
+//            Father.closeSad();
+        }
+
+        /**
          * Callback hook for Message Events. This method will be invoked when a client send a message.
          *
          * @param message The text message
@@ -105,9 +118,13 @@ import java.net.URI;
          *
          */
         public boolean isUserSessionNull(){
-            if (userSession!=null){
+            if (userSession==null){
                 return true;
             }
             return false;
+        }
+
+        public Session getUserSession(){
+            return userSession;
         }
     }

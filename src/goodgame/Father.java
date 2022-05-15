@@ -16,9 +16,6 @@ public class Father {
      * Папаня запускает всё В-)
      */
     public static Channel channel = new Channel("15365", "Verloin", 45*60*1000L, "undead", "https://cdn.discordapp.com/attachments/655479213075202058/969137760755675146/771Xjpb413.gif");
-//        public static Channel channel = new Channel("183946", "LollyDragon", 45*60*1000L, "king", "https://cdn.discordapp.com/attachments/655479213075202058/969135443574669332/2b01ea3f699e4ea6.gif");
-//        public static Channel channel = new Channel("23802", "LeMeldonium", 1*60*1000L, "king");
-//        public static Channel channel = new Channel("181598", "Cubinec", 30*60*1000L, "king");
     public static String message;
     public static String candy = "";
     public static List<String> list = new LinkedList<>();
@@ -28,15 +25,17 @@ public class Father {
     public static int event = 4; // 4 - базовое, если -1 то будет выбор карамельки
     private static Processor processor;
     private static boolean notReady = true;
+    public static ChatListener chatListener;
+    public static boolean streamIsAlive = false;
 
     public static void prepare() throws IOException, InterruptedException {
         notReady = false;
         channel = new Channel("15365", "Verloin", 45*60*1000L, "undead", "https://cdn.discordapp.com/attachments/655479213075202058/969137760755675146/771Xjpb413.gif");
 //        channel = new Channel("183946", "LollyDragon", 45*60*1000L, "king", "https://cdn.discordapp.com/attachments/655479213075202058/969135443574669332/2b01ea3f699e4ea6.gif");
-//        channel = new Channel("23802", "LeMeldonium", 1*60*1000L, "king");
+//        channel = new Channel("23802", "LeMeldonium", 1*60*1000L, "king", "");
 //        channel = new Channel("181598", "Cubinec", 30*60*1000L, "king");
-        processor = new Processor(channel);
-        ChatListener.app(GetToken.getToken(), channel, processor);
+
+//        ChatListener.app(GetToken.getToken(), channel, processor);
         Commands commands = new Commands(channel);
         System.out.println("инициатор - Father.39");
         if (new ChStatus().fastChannelStatus()){
@@ -47,34 +46,46 @@ public class Father {
     }
 
     public static void letsRock() throws InterruptedException {
+        candy = "";
+        ChatListener.clearQ();
+        streamIsAlive = true;
+        processor = new Processor(channel);
+        chatListener = new ChatListener(GetToken.getToken(), processor);
         timerThread = new TimerThread(channel.getPeriod(), channel.getId(), processor);
         Thread.sleep(1000);
         processor.start();
         Thread.sleep(2000);
         timerThread.start();
         System.out.println(GetToken.getToken());
+        while (!streamIsAlive){
+            closeSad();
+        }
 
     }
 
     public static void closeSad(){
         System.out.println("завершаю");
+        ChatListener.websocketClientEndpointClass.removeMessageHandler();
+        ChatListener.websocketClientEndpointClass.close();
         processor.stop();
         timerThread.stop();
         timerThread = null;
+        chatListener = null;
         candy = "";
         task = null;
         event = 4;
+        notReady = true;
 //        undeadList = new LinkedList<>();
         try {
             whatNext();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+            System.out.println("косяк с whatNext()");
             System.exit(0);
         }
     }
 
     public static void whatNext() throws IOException, InterruptedException {
-        notReady = true;
         while (notReady){
             if (!new NetIsAvailable().internetIsAvailable()){
                 //ждём подключения к интернету
@@ -88,7 +99,7 @@ public class Father {
                 if (new ChStatus().fastChannelStatus() && ChatListener.websocketClientEndpointClass.isUserSessionNull()){
                     //снова подключаемся к стриму
                     System.out.println("стартую");
-                    Father.prepare();
+                    Father.letsRock();
                     notReady = false;
                 } else{
                     //ждём когда заработает стрим

@@ -1,7 +1,5 @@
 package goodgame;
 
-import goodgame.connect.ChatListener;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -50,10 +48,17 @@ public class ChStatus {
                 e.printStackTrace();
             }
         }
-        Father.closeSad();
         System.out.println("стрим выключен.53");
 //        System.exit(0);
-        ChatListener.websocketClientEndpointClass.removeMessageHandler();
+        Father.streamIsAlive = false;
+//        ChatListener.websocketClientEndpointClass.removeMessageHandler();
+//        ChatListener.websocketClientEndpointClass.onClose(ChatListener.websocketClientEndpointClass.getUserSession(), new CloseReason(new CloseReason.CloseCode() {
+//            @Override
+//            public int getCode() {
+//                return 0;
+//            }
+//        }, "stream offline"));
+//        Father.closeSad();
 
             return false;
 
@@ -104,7 +109,7 @@ public class ChStatus {
         System.out.println("стрим выключен.104");
 //        System.exit(0);
 //        Father.closeSad();
-        ChatListener.websocketClientEndpointClass.removeMessageHandler();
+//        ChatListener.websocketClientEndpointClass.removeMessageHandler();
 
         return false;
     }

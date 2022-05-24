@@ -1,12 +1,11 @@
 package goodgame.cahnnel;
 
-import goodgame.Father;
+import goodgame.DataBase;
 import goodgame.Time;
 
 import java.util.List;
 import java.util.Random;
 
-import static goodgame.Father.candy;
 import static goodgame.Father.channel;
 
 public class MessageText {
@@ -64,12 +63,12 @@ public class MessageText {
     }
 
     public static String candy(String name) {
-        if (candy.equals("")){
-            return "До назначения карамельки осталось всего " + Time.getTime(Father.event) + " ";
+        if (DataBase.getCandy().equals("")){
+            return "До назначения карамельки осталось всего " + Time.getTime(DataBase.getEvent()) + " ";
 //            return "Карамельку ещё не выбрали :sad: ";
         }
 
-        return candy + ", " + Smiles.lizaki(7, channel.getName()) + name + " с довольным лицом лижет карамельку ";
+        return DataBase.getCandy() + ", " + Smiles.lizaki(7, channel.getName()) + name + " с довольным лицом лижет карамельку ";
     }
 
     public static String candyOfTheStream(String name) {
@@ -99,7 +98,7 @@ public class MessageText {
         for (String name: usersList){
             txt += name + ", ";
         }
-        if ((Father.event%5 - 1) ==3) {
+        if ((DataBase.getEvent()%5 - 1) ==3) {
             System.out.println("==0");
             return txt + " а ну быстро лизнули стримера! :verloingold:";
         }

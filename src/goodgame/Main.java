@@ -37,8 +37,9 @@ public class Main {
 //            Father.whatNext();
 //            processor.start();
 //            System.out.println(GetToken.getToken());
-            Thread.sleep(300000);
-             i++;
+//            Thread.sleep(300000);
+//             i++;
+            System.out.println("всё плохо");
         }
     }
 

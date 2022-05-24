@@ -30,7 +30,7 @@ public class Processor extends Thread{
     @Override
     public void run() {
         System.out.println("процессор стартанул");
-        String text;
+        String text = "";
         String message;
         try {
             Thread.sleep(5000);
@@ -44,7 +44,7 @@ public class Processor extends Thread{
                     System.out.println("очередь." + queueMessages.size() + message);
                     if (message.contains("{\"type\":\"message")) {
                         text = Commands.someoneAskedMe(message);
-                        if (!lastMessage.contains(text) && text != null) {
+                        if (text != null) {
                             lastMessage = text;
                             websocketClientEndpointClass.sendMessage(text);
                         }

@@ -1,11 +1,11 @@
 package goodgame.multithread;
 
 import goodgame.ChStatus;
-import goodgame.Father;
+import goodgame.DataBase;
 import goodgame.Pictures;
 import goodgame.Requests;
-import goodgame.cahnnel.Smiles;
 import goodgame.cahnnel.MessageText;
+import goodgame.cahnnel.Smiles;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,11 +29,11 @@ public class TimerThread extends Thread{
 
     @Override
     public void run() { //глупая версия таймера
-            Father.task = new TimerTask() {
+            DataBase.setTask( new TimerTask() {
                 public void run() {
                     System.out.println("инициатор - TimerThread.33");
                     if (ChStatus.getStatus()) { //каждый "период" ивент уменьшается на 1. если ивент -1
-                        switch (Father.event % 5 - 1) { //то срабатывает выбор карамельки (разовый ивент)
+                        switch (DataBase.getEvent() % 5 - 1) { //то срабатывает выбор карамельки (разовый ивент)
                             case (3), (-1) -> {
                                 processor.setDoEvent(true);
                                 websocketClientEndpointClass.sendMessage(Requests.getUserList());
@@ -45,23 +45,23 @@ public class TimerThread extends Thread{
                                 processor.setMakeCandy(true);
                                 processor.setDoEvent(true);
                                 websocketClientEndpointClass.sendMessage(Requests.getUserList());
-                                Father.event = 33;
+                                DataBase.setEvent(33);
                             }
                             default -> websocketClientEndpointClass.sendMessage(Requests.sendMessage(Pictures.liveWithLic()));
                         }
-                        System.out.println("event = " + (Father.event - 1));
-                        System.out.println("candy = " + Father.candy);
-                        Father.event--;
+                        System.out.println("event = " + (DataBase.getEvent() - 1));
+                        System.out.println("candy = " + DataBase.getCandy());
+                        DataBase.setEvent(DataBase.getEvent() - 1);
                     } else {
                         event--;
 //                        System.exit(0);
                     }
                 }
-            };
+            });
 
             Timer timer = new Timer("Timer");
             long delay = 10*1000L;
-            timer.scheduleAtFixedRate (Father.task, delay, period);
+            timer.scheduleAtFixedRate (DataBase.getTask(), delay, period);
 
 
 //            try {

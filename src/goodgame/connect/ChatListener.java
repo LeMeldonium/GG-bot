@@ -1,6 +1,7 @@
 package goodgame.connect;
 
 
+import goodgame.DataBase;
 import goodgame.Requests;
 import goodgame.multithread.Processor;
 
@@ -11,6 +12,15 @@ import java.util.Date;
 
 public class ChatListener extends Thread{
     public static WebsocketClientEndpointClass websocketClientEndpointClass;
+
+    static {
+        try {
+            websocketClientEndpointClass = new WebsocketClientEndpointClass(new URI("wss://chat.goodgame.ru/chat/websocket"));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String message = "";
     public static Date lastTime;
     public static String text;
@@ -24,6 +34,13 @@ public class ChatListener extends Thread{
 
     public ChatListener(String token, Processor processor){
         queueMessages.clear();
+        if (websocketClientEndpointClass.isUserSessionNull()){
+            try {
+                websocketClientEndpointClass = new WebsocketClientEndpointClass(new URI("wss://chat.goodgame.ru/chat/websocket"));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
         app(token, processor);
     }
 
@@ -31,19 +48,20 @@ public class ChatListener extends Thread{
         try {
             System.out.println("TestApp");
             // open websocket
-            websocketClientEndpointClass = new WebsocketClientEndpointClass(new URI("wss://chat.goodgame.ru/chat/websocket"));
+//            websocketClientEndpointClass = new WebsocketClientEndpointClass(new URI("wss://chat.goodgame.ru/chat/websocket"));
 
             // add listener
             try {
                 System.out.println("прислушиваюсь");
                 websocketClientEndpointClass.addMessageHandler(new WebsocketClientEndpointClass.MessageHandler() {
                     public void handleMessage(String message) {
-
-                        if (message.contains("{\"type\":\"users_list")){
-                            processor.aaaplayer(message);
-                        } else {
-                            System.out.println("сообщение из чата");
-                            queueMessages.add(message);
+                        if (DataBase.getStreamIsAlive()) {
+                            if (message.contains("{\"type\":\"users_list")) {
+                                processor.aaaplayer(message);
+                            } else {
+                                System.out.println("сообщение из чата");
+                                queueMessages.add(message);
+                            }
                         }
 
 //                        if (message.contains("{\"type\":\"message")) {
@@ -149,13 +167,11 @@ Thread.sleep(3500);
 
         } catch (InterruptedException ex) {
             System.err.println("InterruptedException exception: " + ex.getMessage());
-        } catch (URISyntaxException ex) {
-            System.err.println("URISyntaxException exception: " + ex.getMessage());
         }
     }
 
     public static void clearQ(){
         System.out.println("чищу очередь");
-        queueMessages = new ArrayList<>();
+        queueMessages.subList(0, queueMessages.size()).clear();
     }
 }

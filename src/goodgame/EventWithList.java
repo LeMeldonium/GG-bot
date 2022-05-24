@@ -5,7 +5,6 @@ import goodgame.cahnnel.MessageText;
 import java.util.List;
 import java.util.Random;
 
-import static goodgame.Father.candy;
 
 public class EventWithList {
     public static List <String> userList = null;
@@ -21,8 +20,8 @@ public class EventWithList {
         if (makeCandy){
 //            TestApp.canRandomize = false;
 
-            candy = userList.get(random.nextInt(userList.size()));
-            return Requests.sendMessage(MessageText.candyOfTheStream(candy));
+            DataBase.setCandy(userList.get(random.nextInt(userList.size())));
+            return Requests.sendMessage(MessageText.candyOfTheStream(DataBase.getCandy()));
         } else {
             if (userList.size() <= 72){
                 num = userList.size()*2/4;

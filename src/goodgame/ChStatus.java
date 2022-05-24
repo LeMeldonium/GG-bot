@@ -43,14 +43,14 @@ public class ChStatus {
             }
             x++;
             try {
-                Thread.sleep(60000);
+                Thread.sleep(6000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         System.out.println("стрим выключен.53");
 //        System.exit(0);
-        Father.streamIsAlive = false;
+        DataBase.setStreamIsAlive(false);
 //        ChatListener.websocketClientEndpointClass.removeMessageHandler();
 //        ChatListener.websocketClientEndpointClass.onClose(ChatListener.websocketClientEndpointClass.getUserSession(), new CloseReason(new CloseReason.CloseCode() {
 //            @Override

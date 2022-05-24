@@ -1,7 +1,5 @@
 package goodgame;
 
-import goodgame.connect.ChatListener;
-
 public class Time {
 
     public static String getTime(int plus) {
@@ -11,7 +9,7 @@ public class Time {
         System.out.println(pH + " plus chasov");
         int pM = (int) (plus * Father.channel.getPeriod() % 60000);
         System.out.println(pM + " plus minut");
-        long delta = Father.task.scheduledExecutionTime() + Father.channel.getPeriod() - System.currentTimeMillis();
+        long delta = DataBase.getTask().scheduledExecutionTime() + Father.channel.getPeriod() - System.currentTimeMillis();
         if (delta < 0) {
             delta *= -1;
         }
